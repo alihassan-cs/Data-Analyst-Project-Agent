@@ -1,0 +1,11 @@
+Table relationships (Olist Brazilian e-commerce data):
+- orders.order_id = order_items.order_id = order_payments.order_id
+- orders.customer_id = customers.customer_id. customer_id is created per order; customer_unique_id identifies the real person.
+- order_items.product_id = products.product_id
+- order_items.seller_id = sellers.seller_id
+- products.product_category_name = product_category_name_translation.product_category_name. The English name is product_category_name_english.
+- Revenue = SUM(order_items.price). order_payments.payment_value is what the customer paid, including freight.
+- An order can have several order_items rows and several order_payments rows. Never join both to the same order without aggregating one of them first, or values get duplicated.
+- Timestamps are TEXT in 'YYYY-MM-DD HH:MM:SS'. The data covers 2016 to 2018.
+- To count, rank or describe customers, always use customer_unique_id (the real person). customer_id changes with every order, so grouping by it splits one person into many.
+- The data has no cost, profit or margin columns. freight_value is the shipping fee, not a product cost. Never compute profit or margin from freight_value, payment_value or any other column.

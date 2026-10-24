@@ -1,0 +1,2 @@
+date,tag,provider,model,passed,total,accuracy_pct,tokens_in,tokens_out
+2026-10-03,v1,groq,openai/gpt-oss-20b,29,30,96.7,142897,5452

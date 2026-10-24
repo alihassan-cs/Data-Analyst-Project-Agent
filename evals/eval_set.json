@@ -1,0 +1,212 @@
+[
+  {
+    "id": 1,
+    "group": "easy",
+    "type": "number",
+    "question": "How many orders are there in total?",
+    "gold_sql": "SELECT COUNT(*) FROM orders"
+  },
+  {
+    "id": 2,
+    "group": "easy",
+    "type": "number",
+    "question": "How many unique customers are there? Count real people using customer_unique_id.",
+    "gold_sql": "SELECT COUNT(DISTINCT customer_unique_id) FROM customers"
+  },
+  {
+    "id": 3,
+    "group": "easy",
+    "type": "number",
+    "question": "How many sellers are there?",
+    "gold_sql": "SELECT COUNT(*) FROM sellers"
+  },
+  {
+    "id": 4,
+    "group": "easy",
+    "type": "number",
+    "question": "How many products are in the products table?",
+    "gold_sql": "SELECT COUNT(*) FROM products"
+  },
+  {
+    "id": 5,
+    "group": "easy",
+    "type": "number",
+    "question": "How many orders have the status canceled?",
+    "gold_sql": "SELECT COUNT(*) FROM orders WHERE order_status = 'canceled'"
+  },
+  {
+    "id": 6,
+    "group": "easy",
+    "type": "number",
+    "question": "What is the average price of an order item? Round to 2 decimals.",
+    "gold_sql": "SELECT AVG(price) FROM order_items"
+  },
+  {
+    "id": 7,
+    "group": "easy",
+    "type": "number",
+    "question": "What is the total freight_value across all order items? Round to 2 decimals.",
+    "gold_sql": "SELECT SUM(freight_value) FROM order_items"
+  },
+  {
+    "id": 8,
+    "group": "easy",
+    "type": "number",
+    "question": "What is the highest price of any single order item?",
+    "gold_sql": "SELECT MAX(price) FROM order_items"
+  },
+  {
+    "id": 9,
+    "group": "easy",
+    "type": "number",
+    "question": "How many different payment types exist?",
+    "gold_sql": "SELECT COUNT(DISTINCT payment_type) FROM order_payments"
+  },
+  {
+    "id": 10,
+    "group": "easy",
+    "type": "text",
+    "question": "Which order_status is the most common in the orders table?",
+    "gold_sql": "SELECT order_status FROM orders GROUP BY 1 ORDER BY COUNT(*) DESC LIMIT 1"
+  },
+  {
+    "id": 11,
+    "group": "medium",
+    "type": "text",
+    "question": "Which customer_state has the most customers (count customer_id rows)?",
+    "gold_sql": "SELECT customer_state FROM customers GROUP BY 1 ORDER BY COUNT(*) DESC LIMIT 1"
+  },
+  {
+    "id": 12,
+    "group": "medium",
+    "type": "list",
+    "question": "What are the top 5 customer states by number of customers (count customer_id rows)?",
+    "gold_sql": "SELECT customer_state FROM customers GROUP BY 1 ORDER BY COUNT(*) DESC LIMIT 5"
+  },
+  {
+    "id": 13,
+    "group": "medium",
+    "type": "text",
+    "question": "Which payment type is used most often, by number of payments?",
+    "gold_sql": "SELECT payment_type FROM order_payments GROUP BY 1 ORDER BY COUNT(*) DESC LIMIT 1"
+  },
+  {
+    "id": 14,
+    "group": "medium",
+    "type": "number",
+    "question": "What is the average payment_value of credit_card payments? Round to 2 decimals.",
+    "gold_sql": "SELECT AVG(payment_value) FROM order_payments WHERE payment_type = 'credit_card'"
+  },
+  {
+    "id": 15,
+    "group": "medium",
+    "type": "number",
+    "question": "How many orders were placed in 2017 (by order_purchase_timestamp)?",
+    "gold_sql": "SELECT COUNT(*) FROM orders WHERE strftime('%Y', order_purchase_timestamp) = '2017'"
+  },
+  {
+    "id": 16,
+    "group": "medium",
+    "type": "text",
+    "question": "In which year were the most orders placed (by order_purchase_timestamp)?",
+    "gold_sql": "SELECT strftime('%Y', order_purchase_timestamp) FROM orders GROUP BY 1 ORDER BY COUNT(*) DESC LIMIT 1"
+  },
+  {
+    "id": 17,
+    "group": "medium",
+    "type": "number",
+    "question": "How many orders have the status delivered?",
+    "gold_sql": "SELECT COUNT(*) FROM orders WHERE order_status = 'delivered'"
+  },
+  {
+    "id": 18,
+    "group": "medium",
+    "type": "text",
+    "question": "Which seller_state has the most sellers?",
+    "gold_sql": "SELECT seller_state FROM sellers GROUP BY 1 ORDER BY COUNT(*) DESC LIMIT 1"
+  },
+  {
+    "id": 19,
+    "group": "medium",
+    "type": "number",
+    "question": "On average, how many items are in an order (order_items rows divided by distinct orders)? Round to 2 decimals.",
+    "gold_sql": "SELECT 1.0 * COUNT(*) / COUNT(DISTINCT order_id) FROM order_items"
+  },
+  {
+    "id": 20,
+    "group": "medium",
+    "type": "number",
+    "question": "How many payments have more than 10 installments?",
+    "gold_sql": "SELECT COUNT(*) FROM order_payments WHERE payment_installments > 10"
+  },
+  {
+    "id": 21,
+    "group": "hard",
+    "type": "list",
+    "question": "What are the top 5 product categories by number of items sold? Use the exact English category names from the data.",
+    "gold_sql": "SELECT t.product_category_name_english FROM order_items i JOIN products p ON i.product_id = p.product_id JOIN product_category_name_translation t ON p.product_category_name = t.product_category_name GROUP BY 1 ORDER BY COUNT(*) DESC LIMIT 5"
+  },
+  {
+    "id": 22,
+    "group": "hard",
+    "type": "number",
+    "question": "What is the total revenue (sum of price) for the English category health_beauty? Round to 2 decimals.",
+    "gold_sql": "SELECT SUM(i.price) FROM order_items i JOIN products p ON i.product_id = p.product_id JOIN product_category_name_translation t ON p.product_category_name = t.product_category_name WHERE t.product_category_name_english = 'health_beauty'"
+  },
+  {
+    "id": 23,
+    "group": "hard",
+    "type": "number",
+    "question": "What percentage of all orders have the status delivered? Round to 2 decimals.",
+    "gold_sql": "SELECT 100.0 * SUM(order_status = 'delivered') / COUNT(*) FROM orders"
+  },
+  {
+    "id": 24,
+    "group": "hard",
+    "type": "number",
+    "question": "What is the average delivery time in days from order_purchase_timestamp to order_delivered_customer_date, for delivered orders only? Round to 1 decimal.",
+    "gold_sql": "SELECT AVG(julianday(order_delivered_customer_date) - julianday(order_purchase_timestamp)) FROM orders WHERE order_status = 'delivered' AND order_delivered_customer_date IS NOT NULL"
+  },
+  {
+    "id": 25,
+    "group": "hard",
+    "type": "text",
+    "question": "Which customer_state generates the most total payment_value?",
+    "gold_sql": "SELECT c.customer_state FROM orders o JOIN customers c ON o.customer_id = c.customer_id JOIN order_payments p ON o.order_id = p.order_id GROUP BY 1 ORDER BY SUM(p.payment_value) DESC LIMIT 1"
+  },
+  {
+    "id": 26,
+    "group": "trap",
+    "type": "refusal",
+    "question": "What is the profit margin for each product category?",
+    "gold_sql": ""
+  },
+  {
+    "id": 27,
+    "group": "trap",
+    "type": "refusal",
+    "question": "What is the average age of the customers?",
+    "gold_sql": ""
+  },
+  {
+    "id": 28,
+    "group": "trap",
+    "type": "refusal",
+    "question": "Which products have the highest return rate?",
+    "gold_sql": ""
+  },
+  {
+    "id": 29,
+    "group": "trap",
+    "type": "refusal",
+    "question": "What is the gender split of the customers?",
+    "gold_sql": ""
+  },
+  {
+    "id": 30,
+    "group": "trap",
+    "type": "refusal",
+    "question": "How much revenue came from each marketing campaign?",
+    "gold_sql": ""
+  }
+]
