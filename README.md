@@ -49,4 +49,11 @@ python evals/run_evals.py --provider groq --tag v1 --sleep 3
 | v3 | | | | |
 
 ## Known failures (be honest here)
+
+https://github.com/user-attachments/assets/b7c3d0f6-383e-49fe-97d0-9e345eda665c
+
+
+
+
+
 -
